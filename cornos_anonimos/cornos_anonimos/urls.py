@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from cucks.api.viewsets import CuckSignUpViewSet, CuckLoginViewSet
+from cucks.api.viewsets import CuckSignUpViewSet, CuckLoginViewSet, CuckLogoutViewSet
 
 router = routers.DefaultRouter()
 router.register(r'cucks/signup', CuckSignUpViewSet)
 router.register(r'cucks/login', CuckLoginViewSet)
+router.register(r'cucks/logout', CuckLogoutViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

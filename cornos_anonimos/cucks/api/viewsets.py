@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from cucks.models import Cuck
-from .serializers import CuckSerializer
+from .serializers import CuckSerializer, LoginSerializer
 
 
 class CuckSignUpViewSet(ModelViewSet):
@@ -50,8 +50,8 @@ class CuckSignUpViewSet(ModelViewSet):
 
 
 class CuckLoginViewSet(ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = CuckSerializer
+    queryset = Cuck.objects.all()
+    serializer_class = LoginSerializer
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
@@ -73,3 +73,12 @@ class CuckLoginViewSet(ModelViewSet):
                     return Response(status=status.HTTP_400_BAD_REQUEST, data={'erro': 'senha inválida'})
             except:
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'erro': 'login error'})
+
+
+class CuckLogoutViewSet(ModelViewSet):
+    http_method_names = ['get']
+    queryset = User.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        logout(request)
+        return Response(status=status.HTTP_200_OK, data={'ok': 'logout bem sucedido'})
